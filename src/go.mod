@@ -1,4 +1,4 @@
-module git@github.com/masa-4/jojo_api/src
+module github.com/masa-4/jojo_api/src
 
 go 1.16
 

@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/masa-4/jojo_api/src/router"
 
 func main() {
-	fmt.Println("ssss")
+	router.Router()
 }

@@ -9,4 +9,5 @@ func Router() {
 			"health_check": "OK",
 		})
 	})
+	router.Run()
 }
