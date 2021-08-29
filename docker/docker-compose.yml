@@ -11,3 +11,23 @@ services:
             - ../src:/app
         ports:
             - 8080:8080
+        depends_on:
+            - "db"
+    
+    db:
+        build:
+            context: .
+            dockerfile: ./mysql/DockerFile
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: jojo_db
+            MYSQL_USER: jojo
+            MYSQL_PASSWORD: jojopass
+            TZ: 'Asia/Tokyo'
+        command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        volumes:
+            - ../config/db.cnf:/etc/mysql/conf.d/db.cnf
+        ports:
+            - 3306:3306
+    
+            
