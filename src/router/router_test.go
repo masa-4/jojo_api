@@ -29,5 +29,5 @@ func TestGetSubtile(t *testing.T) {
 	reqForSubtitle, _ := http.NewRequest("GET", "/s/1", nil)
 	r.ServeHTTP(w, reqForSubtitle)
 	assert.Equal(t, 200, w.Code)
-	assert.Equal(t, w.Body.String(), "{\"subtitle\":\"ファントムブラッド\"}")
+	assert.Equal(t, w.Body.String(), "{\"subtitle\":\"Fantom Blood\"}")
 }
