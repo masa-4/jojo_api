@@ -21,7 +21,7 @@ func GetSubtitleByPart(part int) Subtitle {
 	defer database.Close()
 
 	var subtile Subtitle
-	database.First(&subtile, part)
+	database.Where("subtitle").First(&subtile, part)
 
 	return subtile
 }
