@@ -10,11 +10,11 @@ import (
 func TestGetSubtitleByPart(t *testing.T) {
 	subtitle := model.GetSubtitleByPart(1)
 
-	assert.Equal(t, subtitle.SUBTITLE, "Fantom Blood")
+	assert.Equal(t, subtitle.SUBTITLE, "ファントムブラッド")
 }
 
 func TestGetStandNameByCharacter(t *testing.T) {
 	charactername := model.GetStandNameByCharacter("空条 承太郎")
 
-	assert.Equal(t, charactername.Name, "スタープラチナ")
+	assert.Equal(t, charactername.STAND, "スタープラチナ")
 }
