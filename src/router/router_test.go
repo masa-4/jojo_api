@@ -38,7 +38,7 @@ func TestGetCharacter(t *testing.T) {
 	r := router.Router()
 	w := httptest.NewRecorder()
 	c, _ := gin.CreateTestContext(w)
-	testjson := bytes.NewBufferString("{\"character\":\"空条 承太郎\"}")
+	testjson := bytes.NewBufferString("{\"character\":\"空 承太郎\"}")
 
 	// 本体取得用のパス
 	c.Request, _ = http.NewRequest("POST", "/p", testjson)
