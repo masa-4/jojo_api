@@ -10,7 +10,7 @@ type Subtitle struct {
 	PART     int    `gorm:"not null"`
 }
 
-func MigrateTable() {
+func MigrateSubtitleTable() {
 	database := db.ConnectDb()
 	database.AutoMigrate(&Subtitle{})
 	defer database.Close()
@@ -21,7 +21,7 @@ func GetSubtitleByPart(part int) Subtitle {
 	defer database.Close()
 
 	var subtile Subtitle
-	database.Where("subtitle").First(&subtile, part)
+	database.First(&subtile, part)
 
 	return subtile
 }

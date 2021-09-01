@@ -8,7 +8,8 @@ import (
 
 func Router() *gin.Engine {
 	router := gin.Default()
-	model.MigrateTable()
+	model.MigrateSubtitleTable()
+	model.MigrateCharacterTable()
 
 	// ヘルスチェック
 	router.GET("/", handler.Health_check)
