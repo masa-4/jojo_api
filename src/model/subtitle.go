@@ -1,13 +1,17 @@
 package model
 
 import (
+	"time"
+
 	"github.com/masa-4/jojo_api/src/db"
 )
 
 type Subtitle struct {
-	ID       int    `gorm:"primarykey;autoIncrement;not null"`
-	SUBTITLE string `gorm:"not null"`
-	PART     int    `gorm:"not null"`
+	ID        int    `gorm:"primarykey;autoIncrement;not null"`
+	SUBTITLE  string `gorm:"not null"`
+	PART      int    `gorm:"not null"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
 
 func MigrateSubtitleTable() {
@@ -21,7 +25,7 @@ func GetSubtitleByPart(part int) Subtitle {
 	defer database.Close()
 
 	var subtile Subtitle
-	database.First(&subtile, part)
+	database.Where("part=?", part).First(&subtile)
 
 	return subtile
 }

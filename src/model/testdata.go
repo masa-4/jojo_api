@@ -5,15 +5,15 @@ import "github.com/masa-4/jojo_api/src/db"
 func InsertTestData() {
 	db := db.ConnectDb()
 	sub := Subtitle{
-		SUBTITLE: "ファントムブラッド",
-		PART:     1,
+		SUBTITLE: "戦闘潮流",
+		PART:     2,
 	}
 	db.Create(&sub)
 
 	char := Character{
 		Name:  "空条 承太郎",
 		STAND: "スタープラチナ",
-		PART:  345,
+		PART:  "3,4,5",
 	}
 	db.Create(&char)
 	defer db.Close()

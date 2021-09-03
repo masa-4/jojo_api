@@ -10,7 +10,7 @@ type Character struct {
 	ID        int    `gorm:"primarykey;autoIncrement;not null"`
 	Name      string `gorm:"not null"`
 	STAND     string `gorm:"not null"`
-	PART      int    `gorm:"type:varchar(100)"`
+	PART      string `gorm:"type:varchar(100)"`
 	CreatedAt time.Time
 	UpdatedAt time.Time
 }
@@ -26,5 +26,13 @@ func GetStandNameByCharacter(character string) Character {
 	var chara_struct Character
 	databse.Where("name=?", character).First(&chara_struct)
 	defer databse.Close()
+	return chara_struct
+}
+
+func GetCharacterNameByStand(stand string) Character {
+	database := db.ConnectDb()
+	var chara_struct Character
+	database.Where("stand=?", stand).First(&chara_struct)
+	defer database.Close()
 	return chara_struct
 }

@@ -1,6 +1,7 @@
 package handler
 
 import (
+	"fmt"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -8,7 +9,11 @@ import (
 )
 
 type StandRequest struct {
-	Character string `json:"field_character`
+	Character string `form:"character"`
+}
+
+type CharacterRequest struct {
+	Stand string `form:"stand"`
 }
 
 func Health_check(c *gin.Context) {
@@ -19,6 +24,7 @@ func Health_check(c *gin.Context) {
 
 func ReturnSubtitle(c *gin.Context) {
 	partString := c.Param("part")
+	fmt.Println(partString)
 	partInt, _ := strconv.Atoi(partString)
 	subetitle := model.GetSubtitleByPart(partInt)
 	c.JSON(200, gin.H{
@@ -28,7 +34,7 @@ func ReturnSubtitle(c *gin.Context) {
 
 func ReturnStand(c *gin.Context) {
 	var reqJson StandRequest
-	if err := c.BindJSON(&reqJson); err != nil {
+	if err := c.ShouldBindJSON(&reqJson); err != nil {
 		c.JSON(403, gin.H{
 			"error": "リクエストボディーはjson形式にしてください",
 		})
@@ -44,4 +50,24 @@ func ReturnStand(c *gin.Context) {
 		})
 	}
 
+}
+
+func ReturnCharacter(c *gin.Context) {
+	var reqJson CharacterRequest
+	if err := c.ShouldBindJSON(&reqJson); err != nil {
+		c.JSON(403, gin.H{
+			"error": "リクエストボディーはjson形式にしてください",
+		})
+	}
+	fmt.Println(reqJson.Stand)
+	character := model.GetCharacterNameByStand(reqJson.Stand)
+	if character.Name == "" {
+		c.JSON(404, gin.H{
+			"error": "指定されたスタンドを持つ本体がDBに登録されていません",
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"character": character.Name,
+		})
+	}
 }

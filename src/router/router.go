@@ -15,9 +15,13 @@ func Router() *gin.Engine {
 	router.GET("/", handler.Health_check)
 
 	// サブタイトル
-	router.GET("/s/:part", handler.ReturnSubtitle)
+	router.GET("/t/:part", handler.ReturnSubtitle)
 
 	// スタンド
 	router.POST("/p", handler.ReturnStand)
+
+	// 本体s
+	router.POST("/s", handler.ReturnCharacter)
+
 	return router
 }
