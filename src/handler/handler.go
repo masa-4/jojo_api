@@ -8,6 +8,10 @@ import (
 	"github.com/masa-4/jojo_api/src/model"
 )
 
+type PartRequest struct {
+	Part string `form:part`
+}
+
 type StandRequest struct {
 	Character string `form:"character"`
 }
@@ -23,13 +27,23 @@ func Health_check(c *gin.Context) {
 }
 
 func ReturnSubtitle(c *gin.Context) {
-	partString := c.Param("part")
-	fmt.Println(partString)
-	partInt, _ := strconv.Atoi(partString)
-	subetitle := model.GetSubtitleByPart(partInt)
-	c.JSON(200, gin.H{
-		"subtitle": subetitle.SUBTITLE,
-	})
+	var reqJson PartRequest
+	if err := c.ShouldBindJSON(&reqJson); err != nil {
+		c.JSON(403, gin.H{
+			"error": "リクエストボディーはjson形式にしてください",
+		})
+	}
+	partInt, _ := strconv.Atoi(reqJson.Part)
+	subtitle := model.GetSubtitleByPart(partInt)
+	if subtitle.SUBTITLE == "" {
+		c.JSON(404, gin.H{
+			"error": "指定された部のサブタイトルがDBに登録されていません",
+		})
+	} else {
+		c.JSON(200, gin.H{
+			"subtitle": subtitle.SUBTITLE,
+		})
+	}
 }
 
 func ReturnStand(c *gin.Context) {

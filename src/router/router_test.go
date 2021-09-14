@@ -27,17 +27,19 @@ func TestPingRouter(t *testing.T) {
 func TestGetSubtile(t *testing.T) {
 	r := router.Router()
 	w := httptest.NewRecorder()
+	c, _ := gin.CreateTestContext(w)
+	testjson := bytes.NewBufferString("{\"part\":\"1\"}")
 
 	// サブタイトル用のパスのテスト
-	reqForSubtitle, _ := http.NewRequest("GET", "/t/2", nil)
-	r.ServeHTTP(w, reqForSubtitle)
+	c.Request, _ = http.NewRequest("POST", "/t", testjson)
+	r.ServeHTTP(w, c.Request)
 	statuscodetest := assert.Equal(t, 200, w.Code)
 	if statuscodetest == false {
 		fmt.Println("サブタイトル取得用APIのテストで200以外のステータスコードが返却されました")
 	} else {
 		fmt.Println("サブタイトル取得用APIで200が返却されました")
 	}
-	subtitletest := assert.Equal(t, "{\"subtitle\":\"戦闘潮流\"}", w.Body.String())
+	subtitletest := assert.Equal(t, "{\"subtitle\":\"ファントムブラッド\"}", w.Body.String())
 	if subtitletest == false {
 		fmt.Println("サブタイトル取得用APIで期待しないサブタイトルが返却されました")
 	} else {
